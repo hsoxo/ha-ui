@@ -1,33 +1,24 @@
 import { useCallback, useMemo } from 'react';
 
-import { useEntity, useHass, useSubscribeEntity } from '@hakit/core';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEntity, useSubscribeEntity } from '@hakit/core';
 
-import { EntityName, FilterByDomain, LightAction, LightEntity, LightOptions } from '../../types';
-import instance from '../../utils/requests';
+import { EntityName, FilterByDomain, LightEntity } from '../../types';
 import { throttle } from '../../utils/throttle';
-
-interface MutateProps {
-  service: LightAction;
-  options?: Partial<LightOptions>;
-}
 
 const MAX_BRIGHTNESS = 255;
 
 export const useLight = (entityId: FilterByDomain<EntityName, 'light'>) => {
   const getEntity = useSubscribeEntity(entityId);
   const entity = getEntity() as LightEntity | null;
-  const { callService } = useHass();
-  const a = useEntity(entityId);
+  const light = useEntity(entityId);
 
-  console.log(a);
   const turnOn = useCallback(
     (brightness: number = MAX_BRIGHTNESS) => {
-      a.service.turnOn({
+      light.service.turnOn({
         brightness,
       });
     },
-    [callService],
+    [light.service],
   );
 
   const throttledTurnOn = useMemo(() => {
@@ -37,14 +28,8 @@ export const useLight = (entityId: FilterByDomain<EntityName, 'light'>) => {
   }, [turnOn]);
 
   const turnOff = useCallback(() => {
-    callService({
-      domain: 'light',
-      service: 'turn_off',
-      target: {
-        entity_id: entityId,
-      },
-    });
-  }, [callService]);
+    light.service.turnOff();
+  }, [light.service.turnOff]);
 
   return { entity, turnOn, turnOff, throttledTurnOn };
 };

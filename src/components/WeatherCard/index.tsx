@@ -16,6 +16,8 @@ const GradientMap = new Map()
   .set(30, 'rgb(255, 150, 79)') // orange
   .set(40, 'rgb(227,87,91)'); // red
 
+const TEMP_BAR_HEIGHT = 16;
+
 export function roundUp(n: number, precision: number = 0): number {
   if (precision <= 0) {
     return Math.ceil(n);
@@ -73,7 +75,7 @@ const WeatherCard = () => {
 
     return {
       background: `linear-gradient(to right, ${gradient})`,
-      marginLeft: `calc(${pos * 100}% - 18px)`,
+      marginLeft: `calc(${pos * 100}% - ${TEMP_BAR_HEIGHT}px)`,
     };
   }, [
     weather?.forecast?.forecast?.[0].temperature,
@@ -82,106 +84,36 @@ const WeatherCard = () => {
   ]);
 
   return (
-    <Container>
-      <div className="icon">{Icon && <Icon />}</div>
+    <Container className="relative w-full">
+      <div className="absolute top-0 -right-4 w-36">{Icon && <Icon />}</div>
 
-      <div className="clock">
-        <div className="date">{currentDate}</div>
-        <div className="time">{currentTime.split(' ')[0]}</div>
+      <div className="py-6 w-fit">
+        <div className="pl-1.5 leading-none">{currentDate}</div>
+        <div className="text-6xl font-light">{currentTime.split(' ')[0].padStart(5, '0')}</div>
+        <div className="text-right leading-none">{weather?.attributes.temperature ?? 0}°C</div>
       </div>
 
-      <div className="temp">
-        <div>{Math.floor(weather?.forecast?.forecast?.[0].templow ?? 0)}°C</div>
-        <div className="temp-bar-wrapper">
-          <div className="cur-dot" style={{ marginLeft }} />
-          <div className="temp-bar" style={{ background }} />
+      <div className="flex gap-2 px-1.5 py-1">
+        <div className="text-xs">{Math.floor(weather?.forecast?.forecast?.[0].templow ?? 0)}°C</div>
+        <div className="relative w-full">
+          <div className="cur-dot absolute rounded-full shadow-inner" style={{ marginLeft }} />
+          <div className="temp-bar w-full shadow-sm" style={{ background }} />
         </div>
-        <div>{Math.floor(weather?.forecast?.forecast?.[0].temperature ?? 0)}°C</div>
+        <div className="text-xs">{Math.floor(weather?.forecast?.forecast?.[0].temperature ?? 0)}°C</div>
       </div>
-      {/*<div className="temp">*/}
-      {/*  <div>*/}
-      {/*    <div>*/}
-      {/*      {Math.floor(weather?.attributes.temperature ?? 0)}*/}
-      {/*      <div>°C</div>*/}
-      {/*    </div>*/}
-      {/*    <div>Now</div>*/}
-      {/*  </div>*/}
-      {/*  {weather?.forecast?.forecast?.slice(0, 8).map(f => (*/}
-      {/*    <div className={f.datetime}>*/}
-      {/*      <div>{Math.floor(f.temperature)}</div>*/}
-      {/*      <div>{new Date(f.datetime).toLocaleTimeString('en-US', { hour: 'numeric' })}</div>*/}
-      {/*    </div>*/}
-      {/*  ))}*/}
-      {/*</div>*/}
     </Container>
   );
 };
 
 const Container = styled.div`
-  --temp-bar-height: 16px;
-  --temp-bar-radius: 8px;
-
-  position: relative;
-  width: 100%;
-  .clock {
-    padding: 24px 0;
-    .date {
-      padding-left: 6px;
-      line-height: 1;
-    }
-    .time {
-      font-size: 60px;
-      font-family: 'Roboto mono', sans-serif;
-      font-weight: 300;
-    }
+  .temp-bar {
+    height: ${TEMP_BAR_HEIGHT}px;
+    border-radius: ${TEMP_BAR_HEIGHT / 2}px;
   }
-  .temp {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    padding: 4px 6px;
-    .temp-bar-wrapper {
-      width: 100%;
-      position: relative;
-      .temp-bar {
-        width: 100%;
-        height: var(--temp-bar-height);
-        border-radius: var(--temp-bar-radius);
-      }
-      .cur-dot {
-        position: absolute;
-        background-color: #ffffff;
-        border-radius: 50%;
-        height: 18px;
-        width: 18px;
-        box-shadow: inset 0 0 0 2px #e1e1e1;
-      }
-    }
-  }
-  .temp {
-    padding: 0 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .forecast {
-      padding-left: 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 16px;
-      line-height: 16px;
-      font-weight: 300;
-    }
-    .current {
-      line-height: 20px;
-      font-size: 24px;
-    }
-  }
-  .icon {
-    position: absolute;
-    top: 0;
-    right: -16px;
-    width: 140px;
+  .cur-dot {
+    background-color: #ffffff;
+    height: ${TEMP_BAR_HEIGHT}px;
+    width: ${TEMP_BAR_HEIGHT}px;
   }
 `;
 

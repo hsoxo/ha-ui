@@ -1,5 +1,3 @@
-import { ex } from '@fullcalendar/core/internal-common';
-
 export type AllDomains = 'weather' | 'sun' | 'light';
 export type DefaultEntityName = `${AllDomains}.${string}`;
 export type EntityName = DefaultEntityName;
@@ -14,6 +12,7 @@ interface Context {
 export enum WeatherCondition {
   ClearNight = 'clear-night',
   Cloudy = 'cloudy',
+  Exceptional = 'exceptional',
   Fog = 'fog',
   Hail = 'hail',
   Lightning = 'lightning',
@@ -26,7 +25,6 @@ export enum WeatherCondition {
   Sunny = 'sunny',
   Windy = 'windy',
   WindyVariant = 'windy-variant',
-  Exceptional = 'exceptional',
 }
 
 export interface WeatherEntity {

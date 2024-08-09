@@ -31,6 +31,11 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
+        test: /\.css$/i,
+        include: path.resolve(__dirname, '../src'),
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
         test: /\.svg$/,
         use: [
           'babel-loader',
@@ -46,9 +51,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      // Plugin que simplifica a criação de arquivos HTML para servir seus pacotes.
       template: path.resolve(__dirname, '../public/index.html'),
     }),
-    new webpack.HotModuleReplacementPlugin(), // Atualiza o navegador quando houver alterações no código
   ],
 };

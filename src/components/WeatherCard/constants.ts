@@ -12,8 +12,6 @@ import animatedFillPartlyCloudyDay from '../../assets/icons/weather/animated/par
 import animatedFillPartlyCloudyNightRain from '../../assets/icons/weather/animated/partly-cloudy-night-rain.svg';
 import animatedFillPartlyCloudyNight from '../../assets/icons/weather/animated/partly-cloudy-night.svg';
 import animatedFillRain from '../../assets/icons/weather/animated/rain.svg';
-import animatedFillRaindrop from '../../assets/icons/weather/animated/raindrop.svg';
-import animatedFillRaindrops from '../../assets/icons/weather/animated/raindrops.svg';
 import animatedFillSleet from '../../assets/icons/weather/animated/sleet.svg';
 import animatedFillSnow from '../../assets/icons/weather/animated/snow.svg';
 import animatedFillThunderstormsRainDay from '../../assets/icons/weather/animated/thunderstorms-day-rain.svg';
@@ -23,49 +21,65 @@ import animatedFillThunderstormsNight from '../../assets/icons/weather/animated/
 import animatedFillWindsock from '../../assets/icons/weather/animated/windsock.svg';
 import { WeatherCondition } from '../../types';
 
-export const weatherIcons: Record<WeatherCondition, { day: ReactNode; night: ReactNode }> = {
-  rainy: {
-    day: animatedFillPartlyCloudyDayRain,
-    night: animatedFillPartlyCloudyNightRain,
-  },
-  partlycloudy: {
-    day: animatedFillPartlyCloudyDay,
-    night: animatedFillPartlyCloudyNight,
-  },
-  cloudy: animatedFillCloudy,
-  'clear-night': {
+export const weatherIcons = {
+  [WeatherCondition.ClearNight]: {
     day: animatedFillClearDay,
     night: animatedFillClearNight,
   },
-  fog: {
+  [WeatherCondition.Cloudy]: {
+    day: animatedFillCloudy,
+    night: animatedFillCloudy,
+  },
+  [WeatherCondition.Exceptional]: {
+    day: animatedFillHurricane,
+    night: animatedFillHurricane,
+  },
+  [WeatherCondition.Fog]: {
     day: animatedFillFogDay,
     night: animatedFillFogNight,
   },
-  hail: animatedFillHail,
-  lightning: {
+  [WeatherCondition.Hail]: {
+    day: animatedFillHail,
+    night: animatedFillHail,
+  },
+  [WeatherCondition.Lightning]: {
     day: animatedFillThunderstormsDay,
     night: animatedFillThunderstormsNight,
   },
-  'lightning-rainy': {
+  [WeatherCondition.LightningRainy]: {
     day: animatedFillThunderstormsRainDay,
     night: animatedFillThunderstormsRainNight,
   },
-  pouring: {
+  [WeatherCondition.PartlyCloudy]: {
+    day: animatedFillPartlyCloudyDay,
+    night: animatedFillPartlyCloudyNight,
+  },
+  [WeatherCondition.Pouring]: {
     day: animatedFillRain,
     night: animatedFillRain,
   },
-  raindrop: {
-    day: animatedFillRaindrop,
-    night: animatedFillRaindrop,
+  [WeatherCondition.Rainy]: {
+    day: animatedFillPartlyCloudyDayRain,
+    night: animatedFillPartlyCloudyNightRain,
   },
-  raindrops: animatedFillRaindrops,
-  snowy: animatedFillSnow,
-  'snowy-rainy': animatedFillSleet,
-  sunny: {
+  [WeatherCondition.Snowy]: {
+    day: animatedFillSnow,
+    night: animatedFillSnow,
+  },
+  [WeatherCondition.SnowyRainy]: {
+    day: animatedFillSleet,
+    night: animatedFillSleet,
+  },
+  [WeatherCondition.Sunny]: {
     day: animatedFillClearDay,
     night: animatedFillClearNight,
   },
-  windy: animatedFillWindsock,
-  'windy-exceptional': animatedFillWindsock,
-  exceptional: animatedFillHurricane,
+  [WeatherCondition.Windy]: {
+    day: animatedFillWindsock,
+    night: animatedFillWindsock,
+  },
+  [WeatherCondition.WindyVariant]: {
+    day: animatedFillWindsock,
+    night: animatedFillWindsock,
+  },
 };
