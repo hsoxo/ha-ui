@@ -1,3 +1,5 @@
+import { Lights } from './lights';
+
 export enum Rooms {
   // Main Floor
   LivingRoom = 'living_room',
@@ -19,14 +21,12 @@ export enum Rooms {
   BasementBedroom = 'basement_bedroom',
   BasementWashroom = 'basement_washroom',
   BasementRecreation = 'recreation',
-  BasementKitchen = 'basement_kitchen',
   BasementLivingRoom = 'basement_living_room',
   WaterHeaterRoom = 'water_heater_room',
   FurnaceRoom = 'furnace_room',
 
   // stairs
-  UpperStairs = 'upper_stairs',
-  LowerStairs = 'lower_stairs',
+  Stairs = 'stairs',
 
   // outside
   MainEntry = 'main_entry',
@@ -34,36 +34,137 @@ export enum Rooms {
   Sidewalk = 'sidewalk',
 }
 
-export const RoomsMap = {
+interface RoomInfo {
+  name: string;
+  icon: string;
+  lights: Lights[];
+  fan?: string[];
+  presence?: string[];
+  water?: string[];
+  doors?: string[];
+  windows?: string[];
+  temperature?: string[];
+  humidity?: string[];
+}
+
+export const RoomsMap: Record<Rooms, RoomInfo> = {
   [Rooms.LivingRoom]: {
     name: 'Living Room',
     icon: 'living-room',
+    lights: [Lights.LivingRoom],
+    presence: [],
+    water: [],
+    doors: [],
+    windows: [],
+    temperature: [],
+    humidity: [],
   },
-  [Rooms.DinningRoom]: 'Dinning Room',
-  [Rooms.Kitchen]: 'Kitchen',
-  [Rooms.EntryHallway]: 'Entry Hallway',
-  [Rooms.GarageHallway]: 'Garage Hallway',
-  [Rooms.MainFloorWashroom]: 'Main Floor Washroom',
+  [Rooms.DinningRoom]: {
+    name: 'Dinning Room',
+    icon: 'dinning-room',
+    lights: [Lights.DinningRoomTable, Lights.DinningRoomCabinet, Lights.DinningRoomCabinetStrip],
+  },
+  [Rooms.Kitchen]: {
+    name: 'Kitchen',
+    icon: 'kitchen',
+    lights: [Lights.KitchenCeiling, Lights.KitchenCabinet, Lights.KitchenIsland],
+  },
+  [Rooms.EntryHallway]: {
+    name: 'Entry Hallway',
+    icon: 'entry-hallway',
+    lights: [Lights.EntryHallway],
+  },
+  [Rooms.GarageHallway]: {
+    name: 'Garage Hallway',
+    icon: 'garage-hallway',
+    lights: [Lights.GarageHallway],
+  },
+  [Rooms.MainFloorWashroom]: {
+    name: 'Washroom (Main Floor)',
+    icon: 'washroom',
+    lights: [Lights.MainFloorWashroom],
+  },
+  [Rooms.SecondFloorWashroom]: {
+    name: 'Washroom (Second Floor)',
+    icon: 'washroom',
+    lights: [Lights.Washroom],
+  },
+  [Rooms.Laundry]: {
+    name: 'Laundry',
+    icon: 'laundry',
+    lights: [Lights.Laundry],
+  },
+  [Rooms.Bedroom]: {
+    name: 'Bedroom',
+    icon: 'bedroom',
+    lights: [Lights.Bedroom],
+  },
+  [Rooms.ToyRoom]: {
+    name: 'Toy Room',
+    icon: 'toy-room',
+    lights: [Lights.ToyRoom],
+  },
+  [Rooms.MasterBedroom]: {
+    name: 'Master Bedroom',
+    icon: 'master-bedroom',
+    lights: [Lights.MasterBedroom, Lights.MasterBedroomEnSuite, Lights.MasterBedroomCloset],
+  },
+  [Rooms.Office]: {
+    name: 'Office',
+    icon: 'office',
+    lights: [Lights.Office11, Lights.Office12, Lights.Office13, Lights.Office21, Lights.Office22, Lights.Office23],
+  },
 
-  [Rooms.SecondFloorWashroom]: 'Washroom',
-  [Rooms.Laundry]: 'Laundry',
-  [Rooms.Bedroom]: 'Bedroom',
-  [Rooms.ToyRoom]: 'Toy Room',
-  [Rooms.MasterBedroom]: 'Master Bedroom',
-  [Rooms.Office]: 'Office',
+  [Rooms.BasementBedroom]: {
+    name: 'Basement Bedroom',
+    icon: 'bedroom',
+    lights: [Lights.BasementBedroom],
+  },
+  [Rooms.BasementWashroom]: {
+    name: 'Washroom (Basement)',
+    icon: 'washroom',
+    lights: [Lights.BasementWashroom],
+  },
+  [Rooms.BasementRecreation]: {
+    name: 'Recreation Room',
+    icon: 'recreation-room',
+    lights: [Lights.BasementKitchen],
+  },
+  [Rooms.BasementLivingRoom]: {
+    name: 'Basement Living Room',
+    icon: 'living-room',
+    lights: [Lights.BasementCeiling],
+  },
+  [Rooms.WaterHeaterRoom]: {
+    name: 'Water Heater Room',
+    icon: 'water-heater-room',
+    lights: [Lights.WaterHeater],
+  },
+  [Rooms.FurnaceRoom]: {
+    name: 'Furnace Room',
+    icon: 'furnace-room',
+    lights: [Lights.FurnaceRoom],
+  },
 
-  [Rooms.BasementBedroom]: 'Basement Bedroom',
-  [Rooms.BasementWashroom]: 'Basement Washroom',
-  [Rooms.BasementRecreation]: 'Recreation Room',
-  [Rooms.BasementKitchen]: 'Basement Kitchen',
-  [Rooms.BasementLivingRoom]: 'Basement Living Room',
-  [Rooms.WaterHeaterRoom]: 'Water Heater Room',
-  [Rooms.FurnaceRoom]: 'Furnace Room',
+  [Rooms.Stairs]: {
+    name: 'Stairs',
+    icon: 'stairs',
+    lights: [Lights.UpperStairs, Lights.LowerStairs],
+  },
 
-  [Rooms.UpperStairs]: 'Upper Stairs',
-  [Rooms.LowerStairs]: 'Lower Stairs',
-
-  [Rooms.MainEntry]: 'Main Entry',
-  [Rooms.Backyard]: 'Backyard',
-  [Rooms.Sidewalk]: 'Sidewalk',
+  [Rooms.MainEntry]: {
+    name: 'Main Entry',
+    icon: 'main-entry',
+    lights: [Lights.MainEntry],
+  },
+  [Rooms.Backyard]: {
+    name: 'Backyard',
+    icon: 'backyard',
+    lights: [Lights.Backyard],
+  },
+  [Rooms.Sidewalk]: {
+    name: 'Sidewalk',
+    icon: 'sidewalk',
+    lights: [Lights.SideWalk],
+  },
 };

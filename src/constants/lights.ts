@@ -12,16 +12,16 @@ export enum Lights {
   FurnaceRoom = 'switch.di_xia_shi_nuan_qi_jian',
   SideWalk = 'switch.yi_lou_ce_men',
 
-  KitchenCabinet = 'switch.chu_fang_chu_ju',
-  KitchenIsland = 'switch.chu_fang_dao_tai',
   Garage = 'switch.yi_lou_che_ku',
   MainFloorWashroom = 'switch.yi_lou_ce_suo',
-  DinningRoom = 'light.can_ting',
+
   DinningRoomTable = 'light.can_ting_can_zhuo',
   DinningRoomCabinet = 'light.can_ting_can_bian_ju',
   DinningRoomCabinetStrip = 'light.can_bian_ju_di_deng',
 
-  Kitchen = 'light.chu_fang_ding_deng',
+  KitchenCeiling = 'light.chu_fang_ding_deng',
+  KitchenCabinet = 'switch.chu_fang_chu_ju',
+  KitchenIsland = 'switch.chu_fang_dao_tai',
 
   BasementCeiling = 'light.di_xia_shi_zhu_deng',
   BasementKitchen = 'light.di_xia_shi_chu_fang',
@@ -38,7 +38,7 @@ export enum Lights {
   UpperStairs = 'light.lou_ti_jian_shang_lou',
   LowerStairs = 'light.lou_ti_jian_xia_lou',
 
-  GarageEntry = 'light.yi_lou_che_ku_men_lang',
+  GarageHallway = 'light.yi_lou_che_ku_men_lang',
   MainEntry = 'light.yi_lou_da_men',
   EntryHallway = 'light.yi_lou_qian_men_lang',
 
