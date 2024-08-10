@@ -8,6 +8,7 @@ export enum Rooms {
   EntryHallway = 'entry_hallway',
   GarageHallway = 'garage_hallway',
   MainFloorWashroom = 'main_floor_washroom',
+  Garage = 'garage',
 
   // Second Floor
   SecondFloorWashroom = 'washroom',
@@ -16,6 +17,7 @@ export enum Rooms {
   ToyRoom = 'toy_room',
   MasterBedroom = 'master_bedroom',
   Office = 'office',
+  SecondFloorHallway = 'second_floor_hallway',
 
   // Basement
   BasementBedroom = 'basement_bedroom',
@@ -51,7 +53,7 @@ export const RoomsMap: Record<Rooms, RoomInfo> = {
   [Rooms.LivingRoom]: {
     name: 'Living Room',
     icon: 'living-room',
-    lights: [Lights.LivingRoom],
+    lights: [Lights.LivingRoom, Lights.RainbowLight],
     presence: [],
     water: [],
     doors: [],
@@ -78,6 +80,11 @@ export const RoomsMap: Record<Rooms, RoomInfo> = {
     name: 'Garage Hallway',
     icon: 'garage-hallway',
     lights: [Lights.GarageHallway],
+  },
+  [Rooms.Garage]: {
+    name: 'Garage',
+    icon: 'garage',
+    lights: [Lights.Garage],
   },
   [Rooms.MainFloorWashroom]: {
     name: 'Washroom (Main Floor)',
@@ -114,7 +121,11 @@ export const RoomsMap: Record<Rooms, RoomInfo> = {
     icon: 'office',
     lights: [Lights.Office11, Lights.Office12, Lights.Office13, Lights.Office21, Lights.Office22, Lights.Office23],
   },
-
+  [Rooms.SecondFloorHallway]: {
+    name: 'Second Floor Hallway',
+    icon: 'hallway',
+    lights: [Lights.SecondFloorHallway],
+  },
   [Rooms.BasementBedroom]: {
     name: 'Basement Bedroom',
     icon: 'bedroom',

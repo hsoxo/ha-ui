@@ -15,7 +15,6 @@ const Home = () => {
     <Wrapper>
       <Bg1 />
       <Sidebar />
-      <Slider entityId="light.ke_ting_dian_shi_qiang" />
     </Wrapper>
   );
 };

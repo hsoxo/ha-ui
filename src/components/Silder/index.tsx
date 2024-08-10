@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+import { isDoWhileStatement } from '@babel/types';
+import { useIcon } from '@hakit/core';
 import styled from 'styled-components';
 
 import { useLight } from '../../hooks/entities/useLight';
-import { EntityName, FilterByDomain, LightAction } from '../../types';
+import { EntityName, FilterByDomain } from '../../types';
 
 const MAX_BRIGHTNESS = 255;
 
@@ -18,25 +20,38 @@ const percentageToBrightness = (percentage: number) => {
 
 const Slider = ({ entityId }: { entityId: FilterByDomain<EntityName, 'light'> }) => {
   const { entity, turnOn, turnOff, throttledTurnOn } = useLight(entityId);
-
+  const lightIcon = useIcon(entity?.attributes.icon ?? 'mdi-lightbulb');
   const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [transform, setTransform] = useState<string>('translateX(-100%)');
+  const isSwitch = entityId.startsWith('switch');
 
   useEffect(() => {
-    setTransform(calculateTransform(entity?.attributes.brightness ?? 0));
-  }, [entity]);
+    if (isSwitch) {
+      setTransform(entity?.state === 'on' ? 'translateX(0)' : 'translateX(-100%)');
+    } else {
+      setTransform(calculateTransform(entity?.attributes.brightness ?? 0));
+    }
+  }, [isSwitch, entity]);
 
   const handleClick = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const percentage = x / rect.width;
-    turnOn(percentageToBrightness(percentage));
-    setTransform(calculateTransform(percentageToBrightness(percentage)));
+    if (isSwitch) {
+      handleToggle(e);
+    } else {
+      turnOn(percentageToBrightness(percentage));
+      setTransform(calculateTransform(percentageToBrightness(percentage)));
+    }
   };
 
-  const handleMouseDown = () => setMouseDown(true);
+  const handleMouseDown = () => {
+    if (isSwitch) return;
+    setMouseDown(true);
+  };
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isSwitch) return;
     if (mouseDown && e.currentTarget) {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -48,7 +63,13 @@ const Slider = ({ entityId }: { entityId: FilterByDomain<EntityName, 'light'> })
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    entity?.state === 'on' ? turnOff() : turnOn();
+    if (entity?.state === 'on') {
+      turnOff();
+      setTransform('translateX(-100%)');
+    } else {
+      turnOn();
+      setTransform('translateX(0)');
+    }
   };
 
   useEffect(() => {
@@ -58,57 +79,28 @@ const Slider = ({ entityId }: { entityId: FilterByDomain<EntityName, 'light'> })
   }, []);
 
   return (
-    <Container onClick={handleClick} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}>
-      <div className="slider" style={{ transform }} />
-      <div className="box">
-        <div className="icon" onClick={handleToggle}>
-          123
+    <div
+      className={`relative w-full h-12 rounded-3xl overflow-hidden ${isSwitch ? 'cursor-pointer' : 'cursor-ew-resize'}`}
+      onClick={handleClick}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+    >
+      <div className="absolute w-full h-12 bg-amber-600 duration-300" style={{ transform }} />
+      <div className="absolute w-full p-1 flex items-center gap-2 bg-slate-800/40">
+        <div
+          className="min-h-10 min-w-10 flex items-center justify-center bg-slate-800/40 rounded-full cursor-pointer"
+          onClick={handleToggle}
+        >
+          {lightIcon}
         </div>
-        <div className="name">1232</div>
+        <div className="text-nowrap">{entity?.attributes.friendly_name}</div>
       </div>
-    </Container>
+    </div>
   );
 };
 
-const Container = styled.div`
-  position: relative;
-  width: 200px;
-  height: 50px;
-  border-radius: 25px;
-  overflow: hidden;
-  cursor: ew-resize;
-  .box {
-    position: absolute;
-    width: 100%;
-    height: 38px;
-    padding: 6px;
-    background: rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    > * {
-      user-select: none;
-    }
-    .icon {
-      width: 38px;
-      height: 38px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 50%;
-      top: 6px;
-      left: 6px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-  }
-  .slider {
-    position: absolute;
-    width: 100%;
-    height: 50px;
-    background: rgb(255, 220, 200);
-    transition: transform 0.3s;
+export default styled(Slider)`
+  > * {
+    user-select: none;
   }
 `;
-
-export default Slider;

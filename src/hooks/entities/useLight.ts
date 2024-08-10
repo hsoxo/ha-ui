@@ -14,9 +14,8 @@ export const useLight = (entityId: FilterByDomain<EntityName, 'light'>) => {
 
   const turnOn = useCallback(
     (brightness: number = MAX_BRIGHTNESS) => {
-      light.service.turnOn({
-        brightness,
-      });
+      const options = entityId.startsWith('switch') ? {} : { brightness };
+      light.service.turnOn(options);
     },
     [light.service],
   );

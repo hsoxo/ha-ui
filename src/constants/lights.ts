@@ -34,6 +34,7 @@ export enum Lights {
   Bedroom = 'light.er_lou_yiyifang_jian',
   SecondFloorHallway = 'light.er_lou_zou_lang',
   LivingRoom = 'light.ke_ting_dian_shi_qiang',
+  RainbowLight = 'light.0xa4c138ef7da1e8da',
 
   UpperStairs = 'light.lou_ti_jian_shang_lou',
   LowerStairs = 'light.lou_ti_jian_xia_lou',
@@ -46,3 +47,5 @@ export enum Lights {
   MasterBedroomCloset = 'light.zhu_wo_yi_mao_jian',
   MasterBedroom = 'light.zhu_wo_zhu_deng',
 }
+
+export const allLights = Object.values(Lights) as string[];

@@ -1,26 +1,15 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
+import Overall from '../Overall';
 import WeatherCard from '../WeatherCard';
 
 const Sidebar = () => {
   return (
-    <Wrapper>
+    <div className="w-72 min-w-72 h-screen p-2 flex flex-col gap-6 bg-slate-800/20 backdrop-blur rounded-r-3xl">
       <WeatherCard />
-    </Wrapper>
+      <Overall />
+    </div>
   );
 };
-
-const Wrapper = styled.div`
-  width: 280px;
-  height: 100vh;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  background-color: rgba(33, 33, 33, 0.2);
-  backdrop-filter: blur(8px);
-`;
 
 export default Sidebar;
