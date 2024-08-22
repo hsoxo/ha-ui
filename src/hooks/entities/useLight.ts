@@ -2,12 +2,13 @@ import { useCallback, useMemo } from 'react';
 
 import { useEntity, useSubscribeEntity } from '@hakit/core';
 
-import { EntityName, FilterByDomain, LightEntity } from '../../types';
+import { Lights } from '../../constants/lights';
+import { LightEntity } from '../../types';
 import { throttle } from '../../utils/throttle';
 
 const MAX_BRIGHTNESS = 255;
 
-export const useLight = (entityId: FilterByDomain<EntityName, 'light'>) => {
+export const useLight = (entityId: Lights) => {
   const getEntity = useSubscribeEntity(entityId);
   const entity = getEntity() as LightEntity | null;
   const light = useEntity(entityId);

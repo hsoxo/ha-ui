@@ -20,7 +20,7 @@ const Garage = () => {
       className={`flex items-center justify-center gap-1 h-10 rounded-full cursor-pointer ${isOpen ? 'bg-danger' : 'bg-success'} `}
     >
       <div>{isOpen ? garageDoorOpenIcon : garageDoorCloseIcon}</div>
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col">
         <span className={`leading-none ${isOpen ? 'text-danger' : 'text-success'}`}>Garage</span>
         <span className={`leading-none text-xs ${isOpen ? 'text-danger/70' : 'text-success/70'}`}>
           {isOpen ? 'Open' : 'Closed'}

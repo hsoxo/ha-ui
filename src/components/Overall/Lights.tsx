@@ -4,7 +4,7 @@ import { Modal } from '@hakit/components';
 import { LightEntity, useHass, useIcon } from '@hakit/core';
 import { motion } from 'framer-motion';
 
-import { allLights } from '../../constants/lights';
+import { Lights, allLights } from '../../constants/lights';
 import { RoomsMap } from '../../constants/rooms';
 import Slider from '../Silder';
 
@@ -29,7 +29,7 @@ const OverallLights = () => {
   const onLightsByRoom = allLightsInfo.reduce(
     (acc, light) => {
       if (light.state === 'on') {
-        const room = Object.values(RoomsMap).find(room => room.lights.includes(light.entity_id));
+        const room = Object.values(RoomsMap).find(room => room.lights.includes(light.entity_id as Lights));
         if (room) {
           if (acc[room.name]) {
             acc[room.name].push(light);
@@ -49,6 +49,9 @@ const OverallLights = () => {
     {} as Record<string, LightEntity[]>,
   );
 
+  if (!onLights.length) {
+    return null;
+  }
   return (
     <>
       <motion.div
@@ -65,7 +68,7 @@ const OverallLights = () => {
         title={
           <div className="flex items-center">
             <div className="pr-4">On Lights</div>
-            <div className="flex items-center justify-center gap-1 h-10 w-10 bg-red-500/80 rounded-full cursor-pointer">
+            <div className="flex items-center justify-center gap-1 h-10 w-10 rounded-full cursor-pointer bg-red-500/80">
               {lightOffIcon}
             </div>
           </div>
@@ -80,7 +83,7 @@ const OverallLights = () => {
               <div className="text-xl pb-2">{roomName}</div>
               <div className="w-full grid grid-cols-2 gap-4">
                 {lights.map(light => (
-                  <Slider entityId={light.entity_id} />
+                  <Slider entityId={light.entity_id as Lights} />
                 ))}
               </div>
             </div>

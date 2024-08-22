@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { isDoWhileStatement } from '@babel/types';
 import { useIcon } from '@hakit/core';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { useLight } from '../../hooks/entities/useLight';
 import { EntityName, FilterByDomain } from '../../types';
+import { Lights } from "../../constants/lights";
 
 const MAX_BRIGHTNESS = 255;
 
@@ -18,7 +19,7 @@ const percentageToBrightness = (percentage: number) => {
   return brightness < 1 ? 0 : brightness;
 };
 
-const Slider = ({ entityId }: { entityId: FilterByDomain<EntityName, 'light'> }) => {
+const Slider = ({ entityId }: { entityId: Lights }) => {
   const { entity, turnOn, turnOff, throttledTurnOn } = useLight(entityId);
   const lightIcon = useIcon(entity?.attributes.icon ?? 'mdi-lightbulb');
   const [mouseDown, setMouseDown] = useState<boolean>(false);

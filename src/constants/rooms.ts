@@ -52,7 +52,7 @@ interface RoomInfo {
 export const RoomsMap: Record<Rooms, RoomInfo> = {
   [Rooms.LivingRoom]: {
     name: 'Living Room',
-    icon: 'living-room',
+    icon: 'mdi-living-room',
     lights: [Lights.LivingRoom, Lights.RainbowLight],
     presence: [],
     water: [],

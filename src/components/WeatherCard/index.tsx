@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useWeather } from '@hakit/core';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { useSun } from '../../hooks/entities/useSun';
 import { WeatherCondition } from '../../types';

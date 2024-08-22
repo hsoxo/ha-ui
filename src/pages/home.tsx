@@ -1,9 +1,10 @@
 import React from 'react';
 
+import styled from '@emotion/styled';
 import { useHass } from '@hakit/core';
-import styled from 'styled-components';
 
 import Bg1 from '../components/Backgrounds/Bg1';
+import HomePage from '../components/HomePage';
 import Sidebar from '../components/Sidebar';
 import Slider from '../components/Silder';
 
@@ -14,7 +15,10 @@ const Home = () => {
   return (
     <Wrapper>
       <Bg1 />
-      <Sidebar />
+      <div className="flex">
+        <Sidebar />
+        <HomePage />
+      </div>
     </Wrapper>
   );
 };

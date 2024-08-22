@@ -6,7 +6,9 @@ import OverallLights from './Lights';
 const Overall = () => {
   return (
     <div>
-      <Garage />
+      <div className="w-full grid grid-cols-2 gap-4">
+        <Garage />
+      </div>
       <OverallLights />
     </div>
   );
